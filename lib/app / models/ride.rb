@@ -1,2 +1,4 @@
 class Ride < ActiveRecord::Base
-end 
+    belongs_to :shredder
+    belongs_to :trail
+end
