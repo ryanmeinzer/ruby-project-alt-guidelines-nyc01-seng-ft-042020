@@ -7,3 +7,5 @@ greeting
 starter
 
 play
+
+puts "Peace!"

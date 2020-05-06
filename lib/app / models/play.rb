@@ -21,7 +21,6 @@ def play
     receive_trail_suggestion
     continue
     over? ? play : nil
-    puts "Peace!"
 end
 
 def ride
@@ -39,7 +38,7 @@ def ride
 end
 
 def update_skill
-    puts "Your skill has been increased by a point to #{Shredder.last.skill + 1}."
+    puts "Your skill level has been increased by a point to #{Shredder.last.skill + 1}."
     update_last_shredder_skill
 end
 
@@ -64,11 +63,11 @@ def see_leaderboard
 end
 
 def receive_trail_suggestion
-    puts "Based off of your skill of #{Shredder.last.skill} out of 5, we recommend you shred #{display_trail_by_skill} next. Let's go!"
+    puts "Based off of your skill level of #{Shredder.last.skill} out of 5, we recommend you shred #{display_trail_by_skill} next."
 end
 
 def continue
-    puts "This has been fun! Do you want to continue shredding? Input Yes to continue or anything else to stop."
+    puts "You want to give that trail a shot? No probs if you're kicked for the day and want to hang your boots up at the bar. Just input Yes to continue or anything else to stop."
 end
 
 def over?
@@ -98,7 +97,7 @@ end
 def create_shredder_ride(user_time_input)
     trailid = Shredder.last.skill == 1 ? 1 : Shredder.last.skill - 1
     attributes = {
-        shredder: Shredder.last,
+        shredder_id: Shredder.last.id,
         trail_id: trailid,
         time: user_time_input
     }
@@ -129,6 +128,11 @@ def display_trail_by_skill
     # trail = Trail.where(difficulty: Shredder.last.skill)
     # puts trail.map {|trail| trail.name}
 end
+
+# def update_ride_id_by_search(search, update)
+#     search = Ride.find_by(shredder_id: search)
+#     search.update(shredder_id: update)
+# end
 
 # def display_trails_by_difficulty
 #     trails = Trail.where(difficulty: Shredder.last.skill)
