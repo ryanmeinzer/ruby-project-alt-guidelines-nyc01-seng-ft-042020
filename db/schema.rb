@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_031115) do
+ActiveRecord::Schema.define(version: 2020_05_06_001629) do
 
   create_table "rides", force: :cascade do |t|
     t.integer "shredder_id"
     t.integer "trail_id"
-    t.string "time"
+    t.integer "time"
   end
 
   create_table "shredders", force: :cascade do |t|
