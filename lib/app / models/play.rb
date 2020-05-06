@@ -104,6 +104,15 @@ def create_shredder_ride(user_time_input)
     }
     ride = Ride.create(attributes)
     ride.save
+    # former method
+    # trailid = Shredder.last.skill == 1 ? 1 : Shredder.last.skill - 1
+    # attributes = {
+    #     shredder: Shredder.last,
+    #     trail: trailid,
+    #     time: user_time_input
+    # }
+    # ride = Ride.create(attributes)
+    # ride.save
 end
 
 def delete_last_ride
@@ -111,7 +120,7 @@ def delete_last_ride
 end
 
 def display_ride_times_by_last_ride_trail
-    rides = Ride.where(trail: Ride.last.trail.id)
+    rides = Ride.where(trail: Ride.last.trail)
     puts rides.map {|ride| ride.time}.sort
 end
 
