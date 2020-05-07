@@ -1,12 +1,10 @@
 require_relative '../config/environment'
 
-puts "Yo, what's your name? Let's shred."
-puts ""
-puts ""
+greet
 
-greeting
+start
 
-starter
+ride
 
 play
 
