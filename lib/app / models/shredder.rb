@@ -37,8 +37,8 @@ def self.set_skill
     puts "Do you think you're above (or below) a skill level of #{self.last.skill}?! Just enter your skill level of a number from 1 (weakest) to 10 (dopest)."
     puts ""
     puts ""
-    user_skill_input = gets.chomp.strip
-    self.last.update(skill: user_skill_input)
+    user_skill_input = gets.chomp.strip.to_i
+    user_skill_input.between?(1, 10) ? self.last.update(skill: user_skill_input) : self.set_skill
     puts ""
     puts ""
     sleep 2
