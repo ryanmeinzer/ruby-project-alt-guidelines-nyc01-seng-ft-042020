@@ -1,21 +1,21 @@
 # Higher-level methods
 
 def greet
-    create_shredder
+    Shredder.create_shredder
 end
 
 def start
     display_trail
-    increase_skill
-    set_skill
+    Shredder.increase_skill
+    Shredder.set_skill
 end
 
 def ride
     suggest_trails
     create_ride
     display_trail 
-    increase_skill
-    set_time
+    Shredder.increase_skill
+    Ride.set_time
 end
 
 def play
@@ -27,49 +27,16 @@ end
 # Granular methods
 
 # create_shredder
-def create_shredder
-    puts "Yo, what's your name? Let's shred."
-    puts ""
-    puts ""
-    user_name_input = gets.chomp.strip
-    puts ""
-    puts ""
-    sleep 1
-    puts "What up, #{user_name_input}. Let's first hit the easiest trail together, it's called #{Trail.find_by(name: "Training Wheels").name}. Saddle up and follow me."
-    shredder = Shredder.create
-    shredder.name = user_name_input
-    shredder.skill = 0
-    shredder.save
-    puts ""
-    puts ""
-    sleep 5
-end
+# in shredder class
 
 # display_trail
 # method put at bottom of play.rb for space efficiency
 
 # increase_skill
-def increase_skill
-    puts "Your skill level has been increased by a point to #{Shredder.last.skill + 1}."
-    Shredder.last.update(skill: (Shredder.last.skill + 1))
-    puts ""
-    puts ""
-    sleep 3
-end
+# inside shredder class
 
 # set_skill
-def set_skill
-    puts ""
-    puts ""
-    puts "Do you think you're above (or below) a skill level of #{Shredder.last.skill}?! Just enter your skill level of a number from 1 (weakest) to 10 (dopest)."
-    puts ""
-    puts ""
-    user_skill_input = gets.chomp.strip
-    Shredder.last.update(skill: user_skill_input)
-    puts ""
-    puts ""
-    sleep 2
-end
+# inside shredder class
 
 # suggest_trails
 def suggest_trails
@@ -109,19 +76,7 @@ def create_ride
 end
 
 # set_time
-def set_time
-    puts "How fast would you guess that you did that run in? Just enter your best guess in seconds."
-    puts ""
-    user_time_input = gets.chomp.strip
-    puts ""
-    puts ""
-    sleep 2
-    puts "Whoa, you shred that trail in #{user_time_input} seconds?! Sick bra. I've stored that time for you in the mountain's record book."
-    puts ""
-    puts ""
-    Ride.last.update(time: user_time_input)
-    sleep 5
-end
+# inside ride class
 
 # show_menu
 def show_menu
@@ -137,13 +92,13 @@ def show_menu
     puts ""
     user_menu_input = gets.chomp.strip.to_i
     if user_menu_input == 1
-        see_leaderboard
+        Ride.see_leaderboard
     elsif user_menu_input == 2
-        delete_ride
+        Ride.delete_ride
     elsif user_menu_input == 3
         ride
     elsif user_menu_input == 4
-        set_skill
+        Shredder.set_skill
     else
         return
     end
@@ -166,28 +121,10 @@ def over?
 end
 
 # see_leaderboard
-def see_leaderboard
-    puts ""
-    puts ""
-    puts "Alright, so your time was #{Ride.last.time} seconds on your last run on #{Ride.last.trail.name}. Here's the leaderboard in seconds for that trail, that has a difficulty level of #{Ride.last.trail.difficulty}:"
-    puts ""
-    sleep 3
-    rides = Ride.where(trail: Ride.last.trail)
-    puts rides.map {|ride| [ride.time, ride.shredder.name]}.sort
-    puts ""
-    sleep 5
-end
+# inside ride class
 
 # delete_ride
-def delete_ride
-    puts ""
-    puts ""
-    puts "Yeah, we didn't want to put you on blast but that last run on #{Ride.last.trail.name} was pretty weak. We're deleting it from the mountain record book...slowpoke."
-    Ride.last.destroy
-    puts ""
-    puts ""
-    sleep 3
-end
+# inside ride class
 
 def display_trail
     puts ""
