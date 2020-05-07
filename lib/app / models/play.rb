@@ -63,16 +63,21 @@ def create_ride
     puts "Enter #{Shredder.last.skill + 1} to shred #{Trail.find_by(difficulty: Shredder.last.skill + 1).name}."
     puts ""
     puts ""
-    user_trail_input = gets.chomp.strip
-    ride = Ride.create
-    ride.trail_id = user_trail_input
-    ride.shredder_id = Shredder.last.id
-    ride.time = nil
-    ride.save
-    puts ""
-    puts ""
-    puts "Saddle up and follow me. Keep track of your time - this sesh counts!"
-    sleep 2
+    user_trail_input = gets.chomp.strip.to_i
+    unless user_trail_input.between?(Shredder.last.skill - 1, Shredder.last.skill + 1)
+        puts ""
+        create_ride
+    else
+        ride = Ride.create
+        ride.trail_id = user_trail_input
+        ride.shredder_id = Shredder.last.id
+        ride.time = nil
+        ride.save
+        puts ""
+        puts ""
+        puts "Saddle up and follow me. Keep track of your time - this sesh counts!"
+        sleep 2
+    end
 end
 
 # set_time
@@ -87,22 +92,27 @@ def show_menu
     puts "Enter 2 to delete your last ride on #{Ride.last.trail.name} of #{Ride.last.time} seconds."
     puts "Enter 3 to hit the slopes again for another sesh."
     puts "Enter 4 to reset your skill level of #{Shredder.last.skill}."
-    puts "Enter 5 or anything else to quit. Then, go grab a fresh one at the mountain bar and spread your stoke."
+    puts "Enter 5 to quit. Then, go grab a fresh one at the mountain bar and spread your stoke."
     puts ""
     puts ""
     user_menu_input = gets.chomp.strip.to_i
-    if user_menu_input == 1
-        Ride.see_leaderboard
-    elsif user_menu_input == 2
-        Ride.delete_ride
-    elsif user_menu_input == 3
-        ride
-    elsif user_menu_input == 4
-        Shredder.set_skill
+    unless user_menu_input.between?(1, 5)
+        puts ""
+        show_menu
     else
-        return
+        if user_menu_input == 1
+            Ride.see_leaderboard
+        elsif user_menu_input == 2
+            Ride.delete_ride
+        elsif user_menu_input == 3
+            ride
+        elsif user_menu_input == 4
+            Shredder.set_skill
+        else
+            return
+        end
+        show_menu
     end
-    show_menu
 end
 
 # continue

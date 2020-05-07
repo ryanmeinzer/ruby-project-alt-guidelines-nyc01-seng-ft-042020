@@ -4,17 +4,22 @@ class Ride < ActiveRecord::Base
 
 # set_time
 def self.set_time
-    puts "How fast would you guess that you did that run in? Just enter your best guess in seconds."
+    puts "How fast would you guess that you did that run in? Just enter your best guess in seconds between 1 - 100."
     puts ""
-    user_time_input = gets.chomp.strip
-    puts ""
-    puts ""
-    sleep 2
-    puts "Whoa, you shred that trail in #{user_time_input} seconds?! Sick bra. I've stored that time for you in the mountain's record book."
-    puts ""
-    puts ""
-    self.last.update(time: user_time_input)
-    sleep 5
+    user_time_input = gets.chomp.strip.to_i
+    unless user_time_input.between?(1, 100)
+        puts ""
+        self.set_time
+    else
+        puts ""
+        puts ""
+        sleep 2
+        puts "Whoa, you shred that trail in #{user_time_input} seconds?! Sick bra. I've stored that time for you in the mountain's record book."
+        puts ""
+        puts ""
+        self.last.update(time: user_time_input)
+        sleep 5
+    end
 end
 
 # see_leaderboard
