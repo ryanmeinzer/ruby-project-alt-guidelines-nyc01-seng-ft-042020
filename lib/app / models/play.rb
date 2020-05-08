@@ -88,8 +88,13 @@ def show_menu
     puts "Whatchya wanna do now yo?"
     puts ""
     puts ""
-    puts "Enter 1 to see the leaderboard for the last run you did on #{Ride.last.trail.name}."
-    puts "Enter 2 to delete your last ride on #{Ride.last.trail.name} of #{Ride.last.time} seconds."
+    unless Shredder.last.name == Ride.last.shredder.name
+        puts "[If you had any rides, you'd be able to see the trail leaderboard for your last run here...]"
+        puts "[If you had any rides, you'd be able to delete your last one here...Get some rides in yo!]"
+    else
+        puts "Enter 1 to see the leaderboard for the last run you did on #{Ride.last.trail.name}."
+        puts "Enter 2 to delete your last ride on #{Ride.last.trail.name} of #{Ride.last.time} seconds."
+    end
     puts "Enter 3 to hit the slopes again for another sesh."
     puts "Enter 4 to reset your skill level of #{Shredder.last.skill}."
     puts "Enter 5 to quit. Then, go grab a fresh one at the mountain bar and spread your stoke."
